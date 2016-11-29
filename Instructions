@@ -1,0 +1,23 @@
+input hidden word
+
+validate word
+
+store word
+
+correct number of blanks
+
+input valid guesses
+
+guess correct?
+
+guess incorrect?
+
+draw hangman / visual
+
+game won?
+
+game lost?
+
+keep track of scores
+
+levels
