@@ -23,11 +23,28 @@ class Hangman
     end
 
     def correct_guess?(letters)
-        @secret_word.include?(letters)
+        # correct = false
+        @word.scan(/\w/) do |letter|
+            letter == letters ? true : false
+        end
+        # correct
     end
 
+    def right_guess_array(letters)
+        if correct_guess?(letters)
+            @position_secret = @word.index(letters)
+            @correct_guesses[@position_secret] = letters
+        end
+    end
 
-
+    def game_over?(correct_guesses)
+        if @correct_guesses == @secret_word
+        # if @correct_guesses.include?("")
+            true
+        else
+            false
+        end
+    end
 
 
 
