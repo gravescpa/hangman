@@ -13,6 +13,12 @@ class TestHangman < Minitest::Test
         assert_equal(["","","","",""], word.create_guessed_word("debit"))
     end
 
+    def test_letter_guessed_into_array
+        word = Hangman.new("debit")
+        # letters = "d"
+        assert_equal(["d"], word.get_letter_guesses("d"))
+    end
+
     # def test_o_is_a_correct_guess
     #     game_word = Hangman.new("house")
     #     letter_guess = "o"

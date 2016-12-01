@@ -1,5 +1,5 @@
 class Hangman
-    attr_accessor :word, :secret_word, :guessed_letters, :correct_guesses, :guessed_word
+    attr_accessor :word, :secret_word, :guessed_letters, :correct_guesses, :guessed_word, :letters
 
 
     def initialize(word)
@@ -8,6 +8,7 @@ class Hangman
         @guessed_letters = guessed_letters
         @correct_guesses = correct_guesses
         @guessed_word = guessed_word
+        @letters = letters
     end
 
     def input_secret_word(word)
@@ -22,6 +23,12 @@ class Hangman
     #     number_of_blanks = word.length
     #     blank_word = Array.new(number_of_blanks, "")
     # end
+
+    def get_letter_guesses(letters)
+        guessed_letters = []
+        guessed_letters << letters
+    end
+
 
     # def word_include?(letter_guess)
     #     @word.include? letter_guess
