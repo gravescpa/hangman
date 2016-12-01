@@ -8,10 +8,10 @@ class TestHangman < Minitest::Test
         assert_equal(["d","e","b","i","t"], word.input_secret_word("debit"))
     end
 
-    # def test_word_returns_empty_array_same_num_strings
-    #     word = Hangman.new("debit")
-    #     assert_equal(["","","","",""], game_word.secret_word_displayed)
-    # end
+    def test_word_returns_empty_array_same_num_strings
+        word = Hangman.new("debit")
+        assert_equal(["","","","",""], word.create_guessed_word("debit"))
+    end
 
     # def test_o_is_a_correct_guess
     #     game_word = Hangman.new("house")

@@ -14,9 +14,9 @@ class Hangman
         secret_word = word.split("")
     end
 
-    # def create_guessed_word(word)
-    #     guessed_word = Array.new(word.length,"")
-    # end
+    def create_guessed_word(word)
+        guessed_word = Array.new(word.length,"")
+    end
 
     # def secret_word_displayed
     #     number_of_blanks = word.length
