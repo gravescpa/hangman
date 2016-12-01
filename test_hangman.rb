@@ -15,25 +15,19 @@ class TestHangman < Minitest::Test
 
     def test_letter_guessed_into_array
         word = Hangman.new("debit")
-        # letters = "d"
         assert_equal(["d"], word.get_letter_guesses("d"))
     end
 
-    # def test_o_is_a_correct_guess
-    #     game_word = Hangman.new("house")
-    #     letter_guess = "o"
-    #     assert_equal(true, game_word.word_include?("o"))
-    # end
+    def test_o_is_a_incorrect_guess
+        secret_word = Hangman.new("debit")
+        letters = "o"
+        assert_equal(false, secret_word.correct_guess?(letters))
+    end
 
-    # def test_r_is_a_false_guess
-    #     game_word = Hangman.new("house")
-    #     letter_guess = "r"
-    #     assert_equal(false, game_word.word_include?("r"))
-    # end
-
-    # def test_letter_guess_pushed_into_array
-    #     game_word = Hangman.new("house")
-    #     assert_equal(["o"], game_word.guessed_letter_array("o"))
-    # end
+    def test_d_is_correct_guess
+        secret_word = Hangman.new("debit")
+        letters = "t"
+        assert_equal(true, secret_word.correct_guess?(letters))
+    end
 
 end
