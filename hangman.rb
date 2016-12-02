@@ -4,22 +4,20 @@ class Hangman
 
     def initialize(word)
         (@word = word).downcase!
-        @guessed_letters = []
+        @guessed_letters = guessed_letters
         @correct_guesses = correct_guesses
         @guessed_word = []
     end
 
     def create_correct_guesses(word)
-        correct_guesses = "*" * word.length
+        @correct_guesses = "*" * word.length
     end
 
-    def get_letter_guesses(letters)
-        @guessed_letters << letters
+    def word_include?(letters)
+        word_include?(letters)
     end
 
     def correct_guess?(letters)
-        puts letters
-        puts @word
         correct = false
         word.scan(/\w/) do |letter|
             letter == letters ? correct = true : false
@@ -35,6 +33,7 @@ class Hangman
     end
 
     def game_over?(correct_guesses)
+        
         if @correct_guesses == @secret_word
         # if @correct_guesses.include?("")
             true
