@@ -13,34 +13,37 @@ class TestHangman < Minitest::Test
         assert_equal("*****", game.create_correct_guesses("debit"))
     end
 
-    # def test_guess_included_in_word
-    #     game = Hangman.new("debit")
-    #     assert_equal(true, game.word_include?("d"))
-    #     # assert_equal(false, game.word_include?("z"))
-    # end
-
-    # def test_letter_guessed_into_array
-    #     game = Hangman.new("debit")
-    #     assert_equal(["d"], game.get_letter_guesses("d"))
-    # end
+    def test_guess_included_in_word
+        game = Hangman.new("debit")
+        assert_equal(true, game.word_include?("d"))
+        assert_equal(false, game.word_include?("z"))
+    end
 
     def test_o_is_a_incorrect_guess
         word = Hangman.new("debit")
-        letters = "o"
-        assert_equal(false, word.correct_guess?(letters))
+        guess = "o"
+        assert_equal(false, word.correct_guess?(guess))
     end
 
     def test_d_is_correct_guess
         word = Hangman.new("debit")
-        letters = "d"
-        assert_equal(true, word.correct_guess?(letters))
+        guess = "d"
+        assert_equal(true, word.correct_guess?(guess))
     end
 
-    # def test_letter_in_correct_position
-    #     secret_word = Hangman.new("debit")
-    #     letters = "e"
-    #     assert_equal(["","e","","",""], position_secret.right_guess_array(letters))
-    # end
+    def test_used_guessed_letter_gets_put_into_array
+        game = Hangman.new("debit")
+        game.make_guess("d")
+        game.make_guess("z")
+        assert_equal(["d", "z"], game.guessed_letters)
+    end
+
+
+    def test_letter_in_correct_position
+        game = Hangman.new("debit")
+        game.update_blanks("e")
+        assert_equal("*e***", game.guessed_word)
+    end
 
     # def test_game_over
     #     word = Hangman.new("debit")
