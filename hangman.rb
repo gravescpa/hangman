@@ -1,21 +1,16 @@
 class Hangman
-    attr_accessor :word, :secret_word, :guessed_letters, :correct_guesses, :guessed_word
+    attr_accessor :word, :guessed_letters, :correct_guesses, :guessed_word
 
 
     def initialize(word)
-        @word = word.downcase!
-        @secret_word = []
+        (@word = word).downcase!
         @guessed_letters = []
-        @correct_guesses = []
+        @correct_guesses = correct_guesses
         @guessed_word = []
     end
 
-    def input_secret_word(word)
-        @secret_word = word.split("")
-    end
-
-    def create_guessed_word(word)
-        @guessed_word = Array.new(word.length,"")
+    def create_correct_guesses(word)
+        correct_guesses = "*" * word.length
     end
 
     def get_letter_guesses(letters)
@@ -23,11 +18,13 @@ class Hangman
     end
 
     def correct_guess?(letters)
-        # correct = false
-        @word.scan(/\w/) do |letter|
-            letter == letters ? true : false
+        puts letters
+        puts @word
+        correct = false
+        word.scan(/\w/) do |letter|
+            letter == letters ? correct = true : false
         end
-        # correct
+        correct
     end
 
     def right_guess_array(letters)
