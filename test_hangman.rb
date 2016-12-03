@@ -42,12 +42,16 @@ class TestHangman < Minitest::Test
     def test_letter_in_correct_position
         game = Hangman.new("debit")
         game.update_blanks("e")
-        assert_equal("*e***", game.guessed_word)
+        assert_equal("*e***", game.correct_guesses)
     end
 
-    # def test_game_over
-    #     word = Hangman.new("debit")
-    #     correct_guesses = ["d","e","b","i","t"]
-    #     assert_equal(true, correct_guesses.game_over?(correct_guesses))
-    # end
+    def test_game_over_false
+        game = Hangman.new("debit")
+        assert_equal(false, game.game_over?("d*bit"))
+    end
+
+    def test_game_over_true
+        game = Hangman.new("debit")
+        assert_equal(true, game.game_over?("debit"))
+    end
 end
