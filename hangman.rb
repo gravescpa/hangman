@@ -3,9 +3,9 @@ class Hangman
 
 
     def initialize(word)
-        (@word = word).downcase!  #this is the secret word
+        @word = word  #this is the secret word
         @guessed_letters = [] #this holds the letters that have been guessed, either right or wrong
-        @correct_guesses = "*"*word.length #this is the blank word "*****" that is replaced by correctly guessed letters
+        @correct_guesses = "*" * word.length #this is the blank word "*****" that is replaced by correctly guessed letters
     end
 
     def create_correct_guesses(word) #This creates the "***" in the same length as the word
