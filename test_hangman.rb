@@ -54,4 +54,17 @@ class TestHangman < Minitest::Test
         game = Hangman.new("debit")
         assert_equal(true, game.game_over?("debit"))
     end
+
+    #This test won't pass for a randomly chosen word
+    # def test_chosen_word
+    #     game = Hangman.new("beer")
+    #     word = "beer"
+    #     assert_equal("beer", game.pick_word)
+    # end
+
+    def test_for_winner
+        game = Hangman.new("debit")
+        correct_guesses = "debit"
+        assert_equal(true, game.winner?(correct_guesses))
+    end
 end

@@ -1,11 +1,18 @@
 class Hangman
-    attr_accessor :word, :guessed_letters, :correct_guesses
+    attr_accessor :word, :guessed_letters, :correct_guesses, :chances
 
 
     def initialize(word)
         @word = word  #this is the secret word
         @guessed_letters = [] #this holds the letters that have been guessed, either right or wrong
         @correct_guesses = "*" * word.length #this is the blank word "*****" that is replaced by correctly guessed letters
+        @chances = word.length + 7
+    end
+
+    def pick_word
+        word = File.readlines("dictionary.txt").sample
+        word = word.delete("\n")    
+        word
     end
 
     def create_correct_guesses(word) #This creates the "***" in the same length as the word
@@ -36,10 +43,13 @@ class Hangman
                 end
                 i += 1
             end
-        
     end
 
     def game_over?(correct_guesses)
+        correct_guesses == word
+    end
+
+    def winner?(correct_guesses)
         correct_guesses == word
     end
 
