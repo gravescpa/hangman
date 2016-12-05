@@ -1,29 +1,31 @@
 require_relative 'hangman.rb'
 
 class Console
-    attr_reader :word
+    attr_reader :word, :game
     attr_accessor :guesses, :solve, :answer
 
-    def initialize
+    
+
+    def initialize      
         @word = word
         @guesses = guesses
         @solve = solve
         @answer = answer
+        # game = Hangman.new(word)
     end
 
     def get_word
-        words = %w"learning lollipop education image computer mobile january february friday flower beauty light earth machine book news yahoo google internet bangladesh india america cricket football friday sunday sunny"
-
-        @word = words[rand(words)]
+        word = File.readlines("dictionary.txt").sample
+        word = word.delete("\n")    
+        word
     end
 
     def input_word
         puts "Let's play Hangman!"
-        puts "guesses the letters of the hidden word"
-        puts "Your hidden word is: #{word}"
-
+        puts "Guess the letters of the hidden word"
+        puts "Your word to guess is: #{word}"
         puts "Input a letter: " 
-        guesses.gets.chomp
+        # guesses.gets.chomp
     end
 
     def wrong_guesses_again

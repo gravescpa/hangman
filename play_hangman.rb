@@ -1,21 +1,38 @@
 require_relative 'hangman.rb'
-require_relative 'console_game.rb'
+# require_relative 'console_game.rb'
 
-console = Console.new
-game = Hangman.new(console.get_word)
+# console = Console.new
+game = Hangman.new
 
-game.create_correct_guesses(console.word)
+game.create_correct_guesses(game.get_word)
+word = game.word
+puts """Let's play Hangman!
 
-until game.game_over?
+Guess the letters of the hidden word
 
-    console.input_word
-    game.make_guess
+Your word to guess is: #{game.correct_guesses}
 
-    if correct_guess?(console.guess)
-        game.update_blanks(console.guess)
-        console.right_guess
+For testing the word is #{word}
+
+You have #{game.chances} chances to guess it.
+
+Take a guess: """ 
+
+
+until game.game_over?(game.correct_guesses)
+    guess = game.input_word(guess)
+
+    puts "You guessed #{guess}"
+
+    game.make_guess(guess)
+
+    game.chances = game.chances - 1
+
+    if game.word_include?(guess)
+        game.update_blanks(guess)
+        game.right_guess
     else
-        console.wrong_guess_again
+        game.wrong_guess_again
     end
 
 end
