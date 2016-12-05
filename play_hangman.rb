@@ -1,11 +1,11 @@
 require_relative 'hangman.rb'
-# require_relative 'console_game.rb'
 
-# console = Console.new
 game = Hangman.new
 
 game.create_correct_guesses(game.get_word)
+
 word = game.word
+
 puts """Let's play Hangman!
 
 Guess the letters of the hidden word
@@ -18,7 +18,6 @@ You have #{game.chances} chances to guess it.
 
 Take a guess: """ 
 
-
 until game.game_over?(game.correct_guesses)
     guess = game.input_word(guess)
 
@@ -28,18 +27,17 @@ until game.game_over?(game.correct_guesses)
 
     game.chances = game.chances - 1
 
-    if game.word_include?(guess)
-        game.update_blanks(guess)
-        game.right_guess
+    if game.chances != 0
+        if game.word_include?(guess)
+            game.update_blanks(guess)
+            game.right_guess
+        else
+            game.wrong_guess_again
+        end
     else
-        game.wrong_guess_again
+        puts "You have run out of chances!"
+        puts "The secret word was #{word}"
+        exit
     end
-
 end
-    
 
-
-
-
-
-# game.end_message
