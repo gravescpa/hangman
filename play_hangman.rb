@@ -6,13 +6,13 @@ game.create_correct_guesses(game.get_word)
 
 word = game.word
 
+# For testing the word is #{word}
+
 puts """Let's play Hangman!
 
 Guess the letters of the hidden word
 
 Your word to guess is: #{game.correct_guesses}
-
-For testing the word is #{word}
 
 You have #{game.chances} chances to guess it.
 
