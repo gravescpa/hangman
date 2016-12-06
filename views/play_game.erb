@@ -1,12 +1,31 @@
 <center>
- Your secret word is <%= blank_word %>.
+ <%= player_1_name %>, your secret word is <%= correct_guesses %>.
 <br>
 <br>
 Guessed Letters <%= guessed_letters.to_s %><br><br>
-Choose a lower case letters or else!
+<br>
+You have <%= chances %> chances to solve the puzzle!
+<br>
+Enter your letter guess below:
 <br>
 <br>
-<form method="post" action="letter_guess">
+<form method="post" action="/play_game">
 	<input type="text" name="letter_guess" pattern="[a-z]" maxlength="1" placeholder= "Enter Letter" autofocus="autofocus" required>
 	<input type="submit">
 </form>
+
+<% if session[:game].chances == 0 %>
+<img class= "loser" src= "/img/hangmanempty.jpg">
+<% elsif session[:game].chances == 1 %>
+<img class= "loser" src= "/img/hangmanempty.jpg">
+<% elsif session[:game].chances == 2 %>
+<img class= "loser" src= "/img/hangmanhead.jpg">
+<% elsif session[:game].chances == 3 %>
+<img class= "loser" src= "/img/hangmanbody.jpg">
+<% elsif session[:game].chances == 4 %>
+<img class= "loser" src= "/img/hangmanleftarm.jpg">
+<% elsif session[:game].chances == 5 %>
+<img class= "loser" src= "/img/hangmanbotharms.jpg">
+<% elsif session[:game].chances == 6 %>
+<img class= "loser" src= "/img/hangmanleftleg.jpg">
+<%end%>

@@ -17,7 +17,42 @@ class Hangman
 
     def create_correct_guesses(word) #This creates the "***" in the same length as the word
         @correct_guesses = "*" * @word.length
-        @chances = @word.length + 7
+        # @chances = @word.length + 7
+    end
+
+    def set_max_chances(word)
+        @chances = word.length + 7
+    end
+
+    def input_word(letter_guess)
+        gets.chomp
+    end
+
+    def play_game
+        create_correct_guesses(get_word)
+
+        until game_over?(correct_guesses)
+            guess = input_word(guess)
+
+            puts "You guessed #{guess}"
+
+            make_guess(guess)
+
+            chances = chances - 1
+
+            if chances != 0
+                if word_include?(guess)
+                    update_blanks(guess)
+                    right_guess
+                else
+                    wrong_guess_again
+                end
+            else
+                puts "You have run out of chances!"
+                puts "The secret word was #{word}"
+                exit
+            end
+        end
     end
 
     def word_include?(letter_guess) #This compares the guessed letter to the word
@@ -54,9 +89,7 @@ class Hangman
         puts "Take a guess: "
     end
 
-    def input_word(letter_guess)
-        gets.chomp
-    end
+    
 
     def wrong_guess_again
         puts "Sorry, that letter isn't in your word"
