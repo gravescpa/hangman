@@ -1,87 +1,71 @@
 class Hangman
-    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :letter_guess, :incorrect_guesses
+    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :incorrect_guesses
 
 
     def initialize
-        @word = File.readlines("dictionary.txt").sample #secret word
-        @guessed_letters = [] #holds the letters that have been guessed, either right or wrong
-        @correct_guesses = correct_guesses #blank word "*****" that is replaced by correctly guessed letters
-        @chances = chances #number of chances to guess the word
-        @guesses = guesses #letter guesses
-        @letter_guess = letter_guess
+        @word = word
+        @guessed_letters = [] 
+        @correct_guesses = correct_guesses 
         @incorrect_guesses = 0
     end
 
-    def get_word #drops empty character from secret word
-        @word = word.delete("\n")    
-    end
 
-    def create_correct_guesses(word) #This creates the "***" in the same length as the word
-        @correct_guesses = "*" * @word.length
-        # @chances = @word.length + 7
-    end
-
-    def set_max_chances(word)
-        @chances = word.length + 7
-    end
-
-    def input_word(letter_guess)
-        gets.chomp
+    def create_correct_guesses(word) 
+        @correct_guesses = "_" * @word.length
     end
 
     def update_incorrect_guesses
         @incorrect_guesses = incorrect_guesses + 1
     end
 
-    def play_game
-        create_correct_guesses(get_word)
-
-        until game_over?(correct_guesses)
-            guess = input_word(guess)
-
-            puts "You guessed #{guess}"
-
-            make_guess(guess)
-
-            chances = chances - 1
-
-            if chances != 0
-                if word_include?(guess)
-                    update_blanks(guess)
-                    right_guess
-                else
-                    update_incorrect_guesses
-                    wrong_guess_again
-                end
-            else
-                puts "You have run out of chances!"
-                puts "The secret word was #{word}"
-                exit
-            end
-        end
+    def correct_guess?(guess) 
+        @word.include?(guess)
     end
 
-    def word_include?(letter_guess) #This compares the guessed letter to the word
-        @word.include?(letter_guess)
-    end
-
-    def make_guess(letter_guess) #This puts the guessed letters into an array
+    def update_guessed_letters(guess) 
         @guessed_letters << letter_guess
     end
 
-    def update_blanks(letter_guess) #this updates the blank word with correct guesses
-            i = 0
-            @word.length.times do
-                if @word[i] == letter_guess
-                    @correct_guesses[i] = letter_guess
-                end
-                i += 1
+    def update_correct_guess(guess) 
+        i = 0
+        @word.length.times do
+            if @word[i] == guess
+                @correct_guesses[i] = guess
             end
-            correct_guesses
+            i += 1
+        end
+        correct_guesses
+    end
+
+    def make_guess(guess)
+        update_guessed_letters
+        if correct_guess?(guess)
+            update_correct_guess(guess)
+        else
+            update_incorrect_guesses
+        end
+    end
+
+    def won?
+        correct_guesses == @word
+    end
+
+    def lost?
+        incorrect_guesses == 9
+    end
+
+#########Functions for command line play##########
+
+    def input_word(guess)
+        gets.chomp
     end
 
     def game_over?(correct_guesses)
         correct_guesses == @word
+    end
+
+    def get_word #drops empty character from secret word
+        @word = word.delete("\n")    
     end
 
     def winner
@@ -94,8 +78,6 @@ class Hangman
         puts "Your word to guess is #{correct_guesses}"
         puts "Take a guess: "
     end
-
-    
 
     def wrong_guess_again
         puts "Sorry, that letter isn't in your word"
