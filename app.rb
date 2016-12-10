@@ -4,57 +4,46 @@ require_relative 'hangman.rb'
 
 enable :sessions
 
-get '/' do
+get '/' do 
+    erb :home
+end
+
+get '/name' do
+    erb :welcome
+end
+
+post '/name' do
+    session[:player_name] = params[:name]
     session[:game] = Hangman.new
-   
-    erb :home, :locals => { :game => session[:game]}
+    redirect '/play_game'
 end
 
-get '/player_1_name' do
-    erb :welcome, :locals => { :game => session[:game], :player_1_name => session[:player_1_name]}
-end
+get '/play_game' do    
+    word = session[:game].word
+    get_word = session[:game].get_word
+    correct_guesses = session[:game].create_correct_guesses(get_word)
+    chances = session[:game].set_max_chances(word)
+    guessed_letters = session[:game].guessed_letters.join("")
 
-# post '/player_1_name' do
-#     session[:player_1_name] = params[:player_1]
+    # images = ["one.jpg", "two.jpg", "three.jpg", "four.jpg", "five.jpg", "six.jpg", "seven.jpg", "eight.jpg"]
+    # image = "images/" + images[incorrect_guesses]
 
-#     erb :player_1_name, :locals => { :game => session[:game], :player_1_name => session[:player_1_name]}    
-# end
-
-get '/play_game' do
-    session[:player_1_name] = params[:player_1]
-    # session[:chances] = params[:chances]
-    session[:word] = session[:game].word
-    session[:get_word] = session[:game].get_word
-    session[:chances] = session[:game].set_max_chances
-    session[:correct_guesses] = session[:game].create_correct_guesses(session[:get_word])
-
-    session[:game].play_game
-
-    erb :play_game, :locals => { :game => session[:game], :player_1_name => session[:player_1_name], :guessed_letters => session[:guessed_letters], :chances => session[:chances]} 
+    # session[:game].play_game
+	
+    erb :play_game, :locals => { :game => session[:game], :player_name => session[:player_name], :guessed_letters => session[:game].guessed_letters, :correct_guesses => session[:game].correct_guesses, :chances => session[:game].chances} 
 end
 
 post '/play_game' do
-    redirect '/letter_guess'
-end
-
-get '/letter_guess' do
-    session[:word] = session[:game].word
-    session[:get_word] = session[:game].get_word
-    # session[:chances] = session[:game].chances
-    session[:correct_guesses] = session[:game].create_correct_guesses(session[:get_word])
-
-    erb :play_game, :locals => { :game => session[:game], :player_1_name => session[:player_1_name], :guessed_letters => session[:game].guessed_letters, :correct_guesses => session[:game].correct_guesses, :chances => session[:game].chances} 
-end
-
-post '/letter_guess' do
-    letter_guess = params[:letter_guess]
-    
-    
     session[:game].play_game
+    # session[:word] = session[:game].word
+    # session[:get_word] = session[:game].get_word
+    # session[:correct_guesses] = session[:game].create_correct_guesses(session[:get_word])
+    # session[:chances] = session[:game].set_max_chances(session[:word])
 
-    
-    
-   
+    # session[:game].play_game
+    # letter_guess = params[:letter_guess]
+
+    # session[:game].play_game
 
 end
 

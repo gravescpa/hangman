@@ -1,5 +1,5 @@
 class Hangman
-    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :letter_guess
+    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :letter_guess, :incorrect_guesses
 
 
     def initialize
@@ -9,6 +9,7 @@ class Hangman
         @chances = chances #number of chances to guess the word
         @guesses = guesses #letter guesses
         @letter_guess = letter_guess
+        @incorrect_guesses = 0
     end
 
     def get_word #drops empty character from secret word
@@ -28,6 +29,10 @@ class Hangman
         gets.chomp
     end
 
+    def update_incorrect_guesses
+        @incorrect_guesses = incorrect_guesses + 1
+    end
+
     def play_game
         create_correct_guesses(get_word)
 
@@ -45,6 +50,7 @@ class Hangman
                     update_blanks(guess)
                     right_guess
                 else
+                    update_incorrect_guesses
                     wrong_guess_again
                 end
             else
