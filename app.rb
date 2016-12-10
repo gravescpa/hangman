@@ -8,17 +8,25 @@ get '/' do
     erb :home
 end
 
-get '/name' do
-    erb :welcome
+get '/player_1_name' do
+    erb :player_1_name
 end
 
-post '/name' do
-    session[:player_name] = params[:name]
-    session[:game] = Hangman.new
+post '/player_1_name' do
+    session[:player_1_name] = params[:player_1_name]
+end
+
+get '/player_2_name' do
+    erb :player_2_name
+end
+
+post '/player_2_name' do
+    session[:player_2_name] = params[:player_2_name]
     redirect '/play_game'
 end
 
-get '/play_game' do    
+get '/play_game' do
+    session[:game] = Hangman.new  
     word = session[:game].word
     get_word = session[:game].get_word
     correct_guesses = session[:game].create_correct_guesses(get_word)
