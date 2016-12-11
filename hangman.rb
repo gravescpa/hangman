@@ -10,8 +10,8 @@ class Hangman
     end
 
 
-    def create_correct_guesses(word) 
-        @correct_guesses = "_" * @word.length
+    def create_correct_guesses(word)
+        @correct_guesses = "_" * word.length
     end
 
     def update_incorrect_guesses
@@ -23,7 +23,7 @@ class Hangman
     end
 
     def update_guessed_letters(guess) 
-        @guessed_letters << letter_guess
+        @guessed_letters << guess
     end
 
     def update_correct_guess(guess) 
@@ -46,6 +46,25 @@ class Hangman
         end
     end
 
+    def guess_a_letter(guess)
+        # until @chances == 0
+        if @chances >= 7
+            too_many_guesses?
+        elsif @word.include? guess
+            # input_secret_word
+            # find_first_occurance_of_correct_letter_in_source_word(guess)
+            correct_guess?(guess)
+            update_guessed_letters(guess)
+            update_correct_guess(guess)
+            # guessed_letter_counter
+        else
+            update_guessed_letters(guess)
+            update_incorrect_guesses
+            # counter
+            # guessed_letter_counter
+        end
+    end
+
     def won?
         correct_guesses == @word
     end
@@ -64,9 +83,9 @@ class Hangman
         correct_guesses == @word
     end
 
-    def get_word #drops empty character from secret word
-        @word = word.delete("\n")    
-    end
+    # def get_word #drops empty character from secret word
+    #     @word = word.delete("\n")    
+    # end
 
     def winner
         puts "You are a winner!  Congratulations!!"
