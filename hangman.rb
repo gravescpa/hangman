@@ -2,7 +2,7 @@ class Hangman
     attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :blank_word, :guessed_letters_length, :incorrect_guesses
 
     def initialize(word)
-        @word = word
+        (@word = word).downcase!
         @guessed_letters = [] 
         @correct_guesses = [] 
         @guessed_letters_length = 0
