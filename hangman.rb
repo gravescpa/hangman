@@ -1,5 +1,5 @@
 class Hangman
-    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :incorrect_guesses, :chances, :blank_word, :guessed_letters_length
+    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :blank_word, :guessed_letters_length, :incorrect_guesses
 
     def initialize(word)
         @word = word
@@ -8,6 +8,7 @@ class Hangman
         @guessed_letters_length = 0
         @chances = 0
         @blank_word = Array.new(word.length, " - ")
+        @incorrect_guesses = 0
     end
 
     def input_word
@@ -57,6 +58,10 @@ class Hangman
         end
     end
 
+    # def incorrect_guess
+    #     @incorrect_guess = incorrect_guess + 1
+    # end
+
     def make_guess(guess)
         if @chances >= 7
             too_many_guesses?
@@ -68,13 +73,14 @@ class Hangman
             guessed_letter_counter
         else
             update_guessed_letters(guess)
+            # incorrect_guess
             counter
             guessed_letter_counter
         end
     end
 
     def already_guessed?(guess)
-        @blank_word.include? guess
+        @guessed_letters.include? guess
     end
 
     def play_game

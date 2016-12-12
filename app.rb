@@ -27,10 +27,11 @@ end
 get '/play_game' do
     @player_2_name = session[:player_2_name]
     @player_word = session[:game].word
-    puts "Player: #{session[:player_2_name]}"
-    puts "Word: #{session[:word]}"
-	
-    erb :play_game, :locals => { :player_2_name => session[:player_2_name], :guessed_letters => session[:game].guessed_letters, :blank_word => session[:game].blank_word } 
+    incorrect_guesses = session[:game].incorrect_guesses
+	# images = ["one.jpg", "two.jpg", "three.jpg", "four.jpg", "five.jpg", "six.jpg", "seven.jpg", "eight.jpg"]
+    # image = "images/" + images[incorrect_guesses]
+
+    erb :play_game, :locals => { :incorrect_guesses => session[:incorrect_guesses], :image => session[:image], :player_2_name => session[:player_2_name], :guessed_letters => session[:game].guessed_letters, :blank_word => session[:game].blank_word } 
 end
 
 post '/letter_guess' do
@@ -61,7 +62,7 @@ get '/winner' do
     guessed_letters_length = session[:game].guessed_letters_length
     write_to_csv(session[:player_2_name], session[:game].word, session[:game].guessed_letters_length)
 
-    erb :winner, :locals => {:guessed_letters => session[:game].guessed_letters, :word => session[:game].word, :guessed_letters_length => session[:game].guessed_letters_length}
+    erb :winner, :locals => {:guessed_letters => session[:game].guessed_letters, :word => session[:game].word, :player_2_name => session[:player_2_name], :guessed_letters_length => session[:game].guessed_letters_length}
 end
 
 def write_to_csv(player_2_name, keyword, guessed_letters_length)

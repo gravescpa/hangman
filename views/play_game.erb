@@ -16,3 +16,21 @@ Enter your letter guess below:
 	<input type="submit">
 </form>
 <br>
+<% if session[:game].chances == 0 %>
+<img class= "loser" src= "/img/one.jpg" width= "200">
+<% elsif session[:game].chances == 1 %>
+<img class= "loser" src= "/img/two.jpg" width= "200">
+<% elsif session[:game].chances == 2 %>
+<img class= "loser" src= "/img/three.jpg" width= "200">
+<% elsif session[:game].chances == 3 %>
+<img class= "loser" src= "/img/four.jpg" width= "200">
+<% elsif session[:game].chances == 4 %>
+<img class= "loser" src= "/img/five.jpg" width= "200">
+<% elsif session[:game].chances == 5 %>
+<img class= "loser" src= "/img/six.jpg" width= "200">
+<% elsif session[:game].chances == 6 %>
+<img class= "loser" src= "/img/seven.jpg" width= "200">
+<% elsif session[:game].chances == 7 %>
+<img class= "loser" src= "/img/eight.jpg" width= "200">
+<h1>LAST CHANCE, MAKE IT COUNT!!!</H1>
+<%end%>
