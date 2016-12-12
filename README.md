@@ -1,5 +1,7 @@
 # Hangman
 
-A simple hangman game that you can play on the command line.
+A simple hangman game that you can play online
 
-To start use play_hangman.rb
+To deploy via localhost use ruby app.rb
+
+Or play online at magichangman.herokuapp.com
