@@ -14,7 +14,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  sinatra (~> 1.4.0)
+  sinatra (~> 1.4.7)
 
 RUBY VERSION
    ruby 2.0.0p648
