@@ -1,68 +1,86 @@
 class Hangman
-    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :incorrect_guesses
+    attr_accessor :word, :guessed_letters, :correct_guesses, :chances, :guesses, :incorrect_guesses, :chances, :blank_word, :guessed_letters_length
 
-
-    def initialize
+    def initialize(word)
         @word = word
         @guessed_letters = [] 
-        @correct_guesses = correct_guesses 
-        @incorrect_guesses = 0
+        @correct_guesses = [] 
+        @guessed_letters_length = 0
+        @chances = 0
+        @blank_word = Array.new(word.length, " - ")
     end
 
-
-    def create_correct_guesses(word)
-        @correct_guesses = "_" * word.length
-    end
-
-    def update_incorrect_guesses
-        @incorrect_guesses = incorrect_guesses + 1
+    def input_word
+        @split_word = @word.split("")
     end
 
     def correct_guess?(guess) 
-        @word.include?(guess)
+        @word.include? guess
     end
 
     def update_guessed_letters(guess) 
         @guessed_letters << guess
     end
 
+    def correct_guesses_array(guess)
+        @correct_guesses << guess
+    end
+
     def update_correct_guess(guess) 
         i = 0
         @word.length.times do
             if @word[i] == guess
-                @correct_guesses[i] = guess
+                @blank_word[i] = guess
+                @split_word.delete_at(i)
             end
             i += 1
         end
-        correct_guesses
+    end
+
+    def correct_guesses_removed_from_array(guess)
+        position_in_word = @word.index(guess)
+        @split_word.delete_at(position_in_word)
+    end
+
+    def combined_fill_and_delete(guess)
+        if correct_guess?(guess)
+            update_correct_guess(guess)
+            correct_guesses_removed_from_array(guess)
+        end
+    end
+
+    def no_empty_spaces?(blank_word)
+        if @blank_word.include?(" - ")
+            false
+        else
+            true
+        end
     end
 
     def make_guess(guess)
-        update_guessed_letters
-        if correct_guess?(guess)
-            update_correct_guess(guess)
+        if @chances >= 7
+            too_many_guesses?
+        elsif correct_guess?(guess)
+            input_word
+            word_included(guess)
+            update_guessed_letters(guess)
+            correct_guesses_array(guess)
+            guessed_letter_counter
         else
-            update_incorrect_guesses
+            update_guessed_letters(guess)
+            counter
+            guessed_letter_counter
         end
     end
 
-    def guess_a_letter(guess)
-        # until @chances == 0
-        if @chances >= 7
-            too_many_guesses?
-        elsif @word.include? guess
-            # input_secret_word
-            # find_first_occurance_of_correct_letter_in_source_word(guess)
-            correct_guess?(guess)
-            update_guessed_letters(guess)
-            update_correct_guess(guess)
-            # guessed_letter_counter
-        else
-            update_guessed_letters(guess)
-            update_incorrect_guesses
-            # counter
-            # guessed_letter_counter
-        end
+    def already_guessed?(guess)
+        @blank_word.include? guess
+    end
+
+    def play_game
+        input_word
+        begin_play
+        make_guess         
     end
 
     def won?
@@ -73,63 +91,32 @@ class Hangman
         incorrect_guesses == 9
     end
 
-#########Functions for command line play##########
-
-    def input_word(guess)
-        gets.chomp
+    def game_over?(correct_guesses, guessed_letters)
+        @guessed_letters.length + 5 >= correct_guesses.length
     end
 
-    def game_over?(correct_guesses)
-        correct_guesses == @word
+    def too_many_guesses?
+        chances >= 7
     end
 
-    # def get_word #drops empty character from secret word
-    #     @word = word.delete("\n")    
-    # end
-
-    def winner
-        puts "You are a winner!  Congratulations!!"
-        exit
+    def counter
+        @chances = chances + 1
     end
 
-    def loser
-        puts "WRONG! Let's go back to just guessing letters, okay?"
-        puts "Your word to guess is #{correct_guesses}"
-        puts "Take a guess: "
+    def guessed_letter_counter
+        @guessed_letters_length = guessed_letters_length + 1
     end
 
-    def wrong_guess_again
-        puts "Sorry, that letter isn't in your word"
-        puts "Guess again: " 
+    def begin_play
+        play_game until no_empty_spaces_left? || game_over?
     end
 
-    def right_guess
-        puts "You guessed wisely!"
-        puts "Your word to guess is #{correct_guesses}"
-        solve_word
+    def word_included(guess)
+        update_correct_guess(guess)
     end
 
-    def solve_word
-        puts "Would you like to guess the word? (Y or N)"
-        
-        solve = gets.chomp
 
-        if solve == 'y'
-            puts "Give it a shot! Enter your guess: "
-            answer = gets.chomp
-                if answer == @word
-                    winner
-                else
-                    loser
-                end
-        elsif solve == 'n'
-            puts "You sissy.  Go ahead and try to guess another letter."
-            puts "Your word to guess is #{correct_guesses}" 
-            puts "Take a guess: " 
-        else
-            puts "Enter only Y or N silly"
-            solve = gets.chomp
-        end
-    end
+
+  
              
 end
