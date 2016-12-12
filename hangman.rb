@@ -64,6 +64,7 @@ class Hangman
     # end
 
     def make_guess(guess)
+        guess = guess.downcase
         if @chances >= 7
             too_many_guesses?
         elsif correct_guess?(guess)
