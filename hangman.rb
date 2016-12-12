@@ -36,6 +36,7 @@ class Hangman
             end
             i += 1
         end
+        correct_guesses
     end
 
     def correct_guesses_removed_from_array(guess)
